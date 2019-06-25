@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(`https://api.github.com/users/${username}/repos`)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       let repoContainer = document.querySelector('#repo-container')
       repoContainer.innerHTML = ''
       repoContainer.innerHTML = `
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
           <main class="repo-list">
             <div class="row repo">
               ${data.map(repo => {
-                console.log(repo);
                 return `
                 <h3>
                   <a href=${repo.url}>
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   </a>
                 </h3>
                 <p><strong>Description:</strong>
-                  <span>${repo.description}</span>
+                  <span>${repo.description ? repo.description : repo.name}</span>
                 </p>
                 <p><strong>Owner:</strong>
                   <span>${repo.owner.login}</span>
@@ -34,13 +32,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     <svg class="icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 14 16" width="14">
                       <use xlink:href="./svg/sprites.svg#star"></use>
                     </svg>
-                    <span>1</span>
+                    <span>${repo.stargazers_count}</span>
                     </div>
                       <div class="col-sm-1 forks">
                         <svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 10 16" width="10">
                           <use xlink:href="./svg/sprites.svg#fork"></use>
                         </svg>
-                      <span>3</span>
+                      <span>${repo.forks}</span>
                     </div>
                   </div>
                 </div>
